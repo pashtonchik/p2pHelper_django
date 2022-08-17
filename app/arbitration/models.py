@@ -7,6 +7,7 @@ class User(models.Model):
     password = models.CharField(max_length=100)
     email_is_confirmed = models.BooleanField()
     ip_address = models.CharField(max_length=20)
+    date_registration = models.DateTimeField(auto_now=True)
 
 
 class Date(models.Model):

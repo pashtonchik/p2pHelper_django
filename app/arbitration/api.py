@@ -89,7 +89,13 @@ def post_exchanges(request):
 
 @api_view(['GET'])
 def registration_user(request):
-
+    client_info = json.loads(request.body.decode("utf-8"))
+    client = User(
+        email=client_info['email'],
+        login=client_info['login'],
+        password=client_info['password'],
+    )
+    client.save()
 
 
 
