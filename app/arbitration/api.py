@@ -84,18 +84,49 @@ def post_exchanges(request):
             price_buy=item['price_buy']
         )
         cur_item.save()
-    return Response({'ok': True}, status.HTTP_200_OK)
+    return Response({'message': 'success'}, status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def registration_user(request):
     client_info = json.loads(request.body.decode("utf-8"))
-    client = User(
-        email=client_info['email'],
-        login=client_info['login'],
-        password=client_info['password'],
-    )
-    client.save()
+
+    users = User.objects.all()
+    incorrect_email = users.filter(email=client_info['email'])
+    incorrect_login = users.filter(login=client_info['login'])
+
+    if incorrect_email:
+        return Response({'message': 'incorrect email'}, status.HTTP_400_BAD_REQUEST)
+
+    elif incorrect_login:
+        return Response({'message': 'incorrect login'}, status.HTTP_400_BAD_REQUEST)
+
+    else:
+        print(incorrect_login, incorrect_email)
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+
+        client = User(
+            email=client_info['email'],
+            login=client_info['login'],
+            password=client_info['password'],
+            ip_address=ip,
+        )
+        client.save()
+        return Response({'message': 'success'}, status.HTTP_200_OK)
+
+
+# @api_view(['POST'])
+# def get_subscription(request):
+#     client_info = json.loads(request.body.decode("utf-8"))
+#     client = User.objects.get(hash=client_info['hash'])
+#     pass
+#
+#     client.save()
+#     return Response({'ok': True}, status.HTTP_200_OK)
 
 
 

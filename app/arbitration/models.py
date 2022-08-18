@@ -5,9 +5,14 @@ class User(models.Model):
     email = models.CharField(max_length=100)
     login = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    email_is_confirmed = models.BooleanField()
+    email_is_confirmed = models.BooleanField(default=False)
     ip_address = models.CharField(max_length=20)
     date_registration = models.DateTimeField(auto_now=True)
+    is_paid_subscription = models.BooleanField(default=False)
+    sub_time_begin = models.DateTimeField(blank=True, null=True)
+    sub_time_end = models.DateTimeField(blank=True, null=True)
+    sub_time_days = models.IntegerField(default=0)
+    hash = models.CharField(max_length=100)
 
 
 class Date(models.Model):

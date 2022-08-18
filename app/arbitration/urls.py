@@ -7,5 +7,5 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('api/getexchanges/', get_exchanges),
     path('api/postexchanges/', post_exchanges),
-    path('api/sendveremail/', send_verification_message),
+    path('api/registrationuser/', registration_user),
 ] + router.urls
