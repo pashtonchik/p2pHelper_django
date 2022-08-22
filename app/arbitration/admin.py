@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 
-@admin.register(User)
+@admin.register(MyUser)
 class ExchangeAdmin(admin.ModelAdmin):
     list_display = ('email', 'login', 'is_paid_subscription')
 
