@@ -1,16 +1,11 @@
-from django.shortcuts import render
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.http import JsonResponse
 from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
-from .models import MyUser
+from .models import Client
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
-
-# Create your views here.
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -18,13 +13,13 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 class RegisterView(generics.CreateAPIView):
-    queryset = MyUser.objects.all()
+    queryset = Client.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
 
 
 @api_view(['GET'])
-def getRoutes(request):
+def get_routes(request):
     routes = [
         '/api/token/',
         '/api/register/',
